@@ -1,17 +1,18 @@
 # go_parallel_api_requests
 Make api calls in parallel using goroutines.
 
-> Note: I recommend installing the useful jq utility first.
-
-## Testing using curl
-
- First, run the example server, leave it running, then open a new terminal window and get back to the project folder.
+## Example Server
+ First, run the example server, and leave it running.
 ```console
 foo@bar:~/go_parallel_api_requests$ ./quickserver
 ```
 Now you have a fake "real world" example in which you have to receive JSON data from three very slow endpoints.
 
-You can test them out in curl like this:
+## Testing using curl
+> Note: I recommend installing the useful jq utility first.
+
+Open a new terminal window in the project folder.
+Now you can test the endpoints in curl like this:
 ```console
 foo@bar:~/go_parallel_api_requests$ curl localhost:4501/number1 | jq
 foo@bar:~/go_parallel_api_requests$ curl localhost:4501/number2 | jq
