@@ -13,7 +13,7 @@ type webdata struct {
 }
 
 func main() {
-	fmt.Println("Welcome. This is the Go example without go routines.")
+	fmt.Println("Welcome. This is the Go example with go routines.")
 	start := time.Now()
 
 	urls := []string{
@@ -24,13 +24,21 @@ func main() {
 
 	var total int
 
+	ch := make(chan int)
+
 	for _, web := range urls {
 
-		result := getNumberFromWeb(web)
-
-		total += result
+		go getNumberFromWeb(web, ch)
 
 	}
+
+	a, b, c := <-ch, <-ch, <-ch
+
+	total = a + b + c
+
+	fmt.Println("A Value is: ", a)
+	fmt.Println("B Value is: ", b)
+	fmt.Println("C Value is: ", c)
 
 	fmt.Println("Total price is: ", total)
 
@@ -38,7 +46,7 @@ func main() {
 	fmt.Println("Execution time is: ", duration)
 }
 
-func getNumberFromWeb(url string) int {
+func getNumberFromWeb(url string, c chan int) {
 
 	response, err := http.Get(url)
 
@@ -50,7 +58,7 @@ func getNumberFromWeb(url string) int {
 
 	content, _ := ioutil.ReadAll(response.Body)
 
-	return decodeJson(content).Number
+	c <- decodeJson(content).Number
 }
 
 func decodeJson(dataFromWeb []byte) webdata {
