@@ -1,5 +1,6 @@
 # go_parallel_api_requests
 Make api calls in parallel using goroutines.
+Nothing too fancy. Just a demonstration for learning purposes.
 
 ## Example Server
  First, run the example server, and leave it running.
